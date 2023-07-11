@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로또 번호 추출 결과</title>
+</head>
+<body>
+    <h1>로또 번호 추출기</h1>
+    로또 번호를 받아보세요!
+    <p>게임 수 : {{ game_number }} </p>
+    <p>로또번호: {{ lotto_numbers }} </p>
+    <a href="{% url 'lotto_input' %}">돌아가기</a>
+</body>
+</html>

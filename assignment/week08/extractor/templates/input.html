@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로또 번호 추출</title>
+</head>
+<body>
+    <h1>로또 번호 추출기</h1>
+    <p>로또 번호를 받아보세요!</p>
+    <form method="get" action="" id="lottoForm">
+        몇 개의 게임을 뽑으시겠습니까?
+        <input type="number" name="game_number" id="gameNumberInput">
+        <input type="button" value="로또 번호 추출하기" onclick="submitForm()">
+    </form>
+
+    <script>
+        function submitForm() {
+            var gameNumber = document.getElementById('gameNumberInput').value;
+            var url = "/lotto/result/?game=" + gameNumber;
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
