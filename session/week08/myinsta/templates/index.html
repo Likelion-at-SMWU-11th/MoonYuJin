@@ -1,3 +1,4 @@
+<!-- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,3 +14,14 @@
     </ul>
 </body>
 </html>
+-->
+
+{% extends 'base.html' %}
+{% block title %}List{% endblock %}
+
+{% block content %}
+<h1>인덱스</h1>
+<ul>
+    <li><a href="{% url 'posts:post-list' %}">게시글 목록</li>
+</ul>
+{% endblock %}
