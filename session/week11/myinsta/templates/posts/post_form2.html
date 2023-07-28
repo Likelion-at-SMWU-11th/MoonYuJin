@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Form{% endblock %}
+
+{% block content %}
+<h1>Post 입력 화면 - Form 사용</h1>
+<form action="{% url 'posts:post-create' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %} <!-- post 요청 시에만 발급하여 csrf 공격에 대해 방어 -->
+    <div>
+        {{ form.as_p }}
+    </div>
+    <div>
+        <input type="submit">
+    </div>
+</form>
+{% endblock %}
