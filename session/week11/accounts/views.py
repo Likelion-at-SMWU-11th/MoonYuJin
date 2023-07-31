@@ -25,11 +25,12 @@ def signup_view(request):
     else:
         # Post 요청 시 데이터 확인 후 회원 생성
         form = SignUpForm(request.POST)
+
         if form.is_valid():
             instance = form.save()
             return redirect('index')
         else:
-            return redirect('account:signup')
+            return redirect('accounts:signup')
         
 def logout_view(request):
     if request.user.is_authenticated:
