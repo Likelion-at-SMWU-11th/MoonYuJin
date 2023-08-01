@@ -9,7 +9,7 @@ class UserBasedForm(forms.ModelForm):
 
 class UserCreateForm(UserBasedForm):
     password2 = forms.CharField(widget=forms.PasswordInput)
-    class Meta(UserBasedForm):
+    class Meta(UserBasedForm.Meta):
         fields = ['username', 'email', 'phone', 'password']
 
 class SignUpForm(UserCreationForm):
