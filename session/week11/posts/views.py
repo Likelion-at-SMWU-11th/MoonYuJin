@@ -4,6 +4,10 @@ from django.views.generic import ListView
 from .models import Post
 from .forms import PostBasedForm, PostCreateForm, PostUpdateForm, PostDetailForm
 from django.contrib.auth.decorators import login_required
+from rest_framework.viewsets import ModelViewSet
+from .serializers import PostModelSerializer
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 def index(request):
     post_list = Post.objects.all().order_by('-created_at')
@@ -124,3 +128,30 @@ def function_view(request):
     elif request.method == 'POST':
         print(f'request.POST: {request.POST}')
     return render(request, 'view.html')
+
+class PostModelViewSet(ModelViewSet):
+    queryset=Post.objects.all()
+    serializer_class=PostModelSerializer
+
+@api_view()
+def calculator(request):
+    num1 = request.GET.get('num1',0)
+    num2 = request.GET.get('num2',0)
+    operators = request.GET.get('operators')
+
+    if operators == '^':  # '+'기호는 규칙상 사용불가하므로 다른 기호 넣기
+        result = int(num1) + int(num2)
+    elif operators == '-':
+        result = int(num1) - int(num2)
+    elif operators == '*':
+        result = int(num1) * int(num2)
+    elif operators == '/':
+        result = int(num1) / int(num2)
+    else:
+        result = 0
+    
+    data = {
+        'type': 'FBW',
+        'result': result
+    }
+    return Response(data)
