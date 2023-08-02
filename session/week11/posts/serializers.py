@@ -6,8 +6,3 @@ class PostModelSerializer(ModelSerializer):
         model=Post
         fields='__all__'
         #fields=['id', 'writer', 'content']
-
-class PostDetailModelSerializer(ModelSerializer):
-    class Meta:
-        model=Post
-        fields='__all__'

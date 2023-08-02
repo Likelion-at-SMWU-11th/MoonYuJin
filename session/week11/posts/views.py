@@ -5,7 +5,7 @@ from .models import Post
 from .forms import PostBasedForm, PostCreateForm, PostUpdateForm, PostDetailForm
 from django.contrib.auth.decorators import login_required
 from rest_framework.viewsets import ModelViewSet
-from .serializers import PostModelSerializer, PostDetailModelSerializer
+from .serializers import PostModelSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
@@ -132,24 +132,6 @@ def function_view(request):
 class PostModelViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostModelSerializer
-
-class PostDetailModelViewSet(ModelViewSet):
-    queryset = Post.objects.all()
-    serializer_class = PostDetailModelSerializer
-
-@api_view()
-def post_detail_update_or_delete(request, id):
-    post = get_object_or_404(Post, id=id)
-    if request.method == 'PUT':
-        serializer_class = PostModelSerializer(instance=post, data=request.data)
-        if serializer_class.is_valid():
-            serializer_class.save()
-    elif request.method == 'DELETE':
-        post.delete()
-        data = {
-            'post': id
-        }
-    return Response(data)
 
 @api_view()
 def calculator(request):

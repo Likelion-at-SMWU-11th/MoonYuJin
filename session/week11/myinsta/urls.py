@@ -20,7 +20,7 @@ urlpatterns = [
     path('cbv/', class_view.as_view()), # as_view: 진입 메소드
 
     path('posts/', include('posts.urls', namespace='posts')),
-    path('posts/<int:id>/', PostDetailModelViewSet.as_view({'get':'list'})),
+    path('posts/<int:id>/', include(router.urls)),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('calculator/', calculator, name='calculator'),
 ]
