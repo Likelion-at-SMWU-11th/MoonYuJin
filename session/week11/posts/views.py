@@ -130,8 +130,8 @@ def function_view(request):
     return render(request, 'view.html')
 
 class PostModelViewSet(ModelViewSet):
-    queryset=Post.objects.all()
-    serializer_class=PostModelSerializer
+    queryset = Post.objects.all()
+    serializer_class = PostModelSerializer
 
 @api_view()
 def calculator(request):
