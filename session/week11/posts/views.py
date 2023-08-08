@@ -5,9 +5,10 @@ from .models import Post
 from .forms import PostBasedForm, PostCreateForm, PostUpdateForm, PostDetailForm
 from django.contrib.auth.decorators import login_required
 from rest_framework.viewsets import ModelViewSet
-from .serializers import PostModelSerializer
+from .serializers import *
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
+from rest_framework import generics, status
 
 def index(request):
     post_list = Post.objects.all().order_by('-created_at')
@@ -131,7 +132,8 @@ def function_view(request):
 
 class PostModelViewSet(ModelViewSet):
     queryset = Post.objects.all()
-    serializer_class = PostModelSerializer
+    # serializer_class = PostModelSerializer
+    serializer_class = PostListSerializer
 
 @api_view()
 def calculator(request):
@@ -155,3 +157,40 @@ def calculator(request):
         'result': result
     }
     return Response(data)
+
+# 게시글 목록 + 생성
+class PostListCreateView(generics.ListAPIView, generics.CreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostListSerializer
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data = request.data)
+        serializer.is_valid(raise_exception = True)
+        # self.perform_create(serializer)
+        # 작성자
+        if request.user.is_authenticated:
+            serializer.save(writer=request.user)
+        else:
+            serializer.save()
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+# 게시글 상세 + 수정 + 삭제
+class PostRetrieveUpdateView(generics.RetrieveAPIView, generics.UpdateAPIView, generics.DestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostRetrieveSerializer
+
+# ViewSet
+class PostModelViewSet(ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostListSerializer
+
+    @action(detail=True, methods=['get'])
+    def get_comment_all(self, request, pk = None):
+        post = self.get_object()
+        comment_all = post.comment_set.all()
+        serializer = CommentListModelSerializer(comment_all, many=True)
+        return Response(serializer.data)
