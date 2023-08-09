@@ -9,6 +9,7 @@ from .serializers import *
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, action
 from rest_framework import generics, status
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 
 def index(request):
     post_list = Post.objects.all().order_by('-created_at')
@@ -194,3 +195,19 @@ class PostModelViewSet(ModelViewSet):
         comment_all = post.comment_set.all()
         serializer = CommentListModelSerializer(comment_all, many=True)
         return Response(serializer.data)
+    
+    def get_permissions(self):
+        action = self.action
+        if action == 'list':
+            permission_classes = [AllowAny]
+        elif action == "create":
+            permission_classes = [IsAuthenticated]
+        elif action == "retrieve":
+            permission_classes = [IsAuthenticated]
+        elif action == "update":
+            permission_classes = [IsAdminUser]
+        elif action == "partial_update":
+            permission_classes = [IsAdminUser]
+        elif action == "destroy":
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
