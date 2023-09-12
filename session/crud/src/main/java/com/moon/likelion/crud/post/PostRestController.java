@@ -34,4 +34,24 @@ public class PostRestController {
         logger.info("in read post");
         return this.postList.get(id);
     }
+
+    @PostMapping("{id}/update")
+    public void updatePost(@PathVariable("id") int id, PostDto postDto) {
+        PostDto targetPost = this.postList.get(id);
+        if(postDto.getTitle() != null) {
+            targetPost.setTitle(postDto.getTitle());
+        }
+        if(postDto.getContent() != null) {
+            targetPost.setContent(postDto.getContent());
+        }
+        if(postDto.getWriter() != null) {
+            targetPost.setWriter(postDto.getWriter());
+        }
+        this.postList.set(id, targetPost);
+    }
+
+    @DeleteMapping("{id}/delete")
+    public void deletePost(@PathVariable("id") int id) {
+        this.postList.remove(id);
+    }
 }
