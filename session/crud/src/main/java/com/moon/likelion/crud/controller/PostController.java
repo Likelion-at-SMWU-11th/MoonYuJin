@@ -6,13 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("post")
 public class PostController {
     private static final Logger logger = LoggerFactory.getLogger(PostController.class);
@@ -26,6 +24,7 @@ public class PostController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createPost(@RequestBody PostDto postDto) {
         this.postService.createPost(postDto);
+        // return postDto.getTitle();
     }
 
     @GetMapping("/{id}")
