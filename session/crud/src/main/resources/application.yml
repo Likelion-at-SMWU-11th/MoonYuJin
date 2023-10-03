@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: test
+
+custom:
+  property:
+    single: custom-property
+    comlist: comma, sparated, list, to, value
+    ncp:
+      id: api-id
+      key: api-key
+      url: https://ncp.com/
