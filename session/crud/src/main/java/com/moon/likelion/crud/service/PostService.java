@@ -1,6 +1,7 @@
 package com.moon.likelion.crud.service;
 
-import com.moon.likelion.crud.controller.PostController;
+// import com.moon.likelion.crud.controller.PostController;
+import com.moon.likelion.crud.controller.PostRestController;
 import com.moon.likelion.crud.dto.PostDto;
 import com.moon.likelion.crud.entity.PostEntity;
 import com.moon.likelion.crud.repo.PostDao;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Service
 public class PostService {
-    private static final Logger logger = LoggerFactory.getLogger(PostController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PostRestController.class);
     private final PostDao postDao;
 
     public PostService(@Autowired PostDao postDao) {

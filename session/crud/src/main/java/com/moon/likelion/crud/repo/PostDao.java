@@ -3,7 +3,7 @@ package com.moon.likelion.crud.repo;
 import com.moon.likelion.crud.dto.PostDto;
 import com.moon.likelion.crud.entity.PostRepository;
 import com.moon.likelion.crud.entity.PostEntity;
-import com.moon.likelion.crud.controller.PostController;
+import com.moon.likelion.crud.controller.PostRestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Repository
 public class PostDao {
-    private static final Logger logger = LoggerFactory.getLogger(PostController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PostRestController.class);
     private final PostRepository postRepository;
 
     public PostDao(@Autowired PostRepository postRepository) {
