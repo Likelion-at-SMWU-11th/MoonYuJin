@@ -1,9 +1,9 @@
 package com.moon.likelion.crud.repo;
 
-import com.moon.likelion.crud.dto.PostDto;
-import com.moon.likelion.crud.entity.PostRepository;
-import com.moon.likelion.crud.entity.PostEntity;
 import com.moon.likelion.crud.controller.PostRestController;
+import com.moon.likelion.crud.dto.PostDto;
+import com.moon.likelion.crud.entity.PostEntity;
+import com.moon.likelion.crud.entity.PostRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class PostDao {
         postEntity.setTitle(dto.getTitle());
         postEntity.setContent(dto.getContent());
         postEntity.setWriter(dto.getWriter());
-        postEntity.setBoardEntity(null);
+        // postEntity.setBoardEntity(null);
 
         this.postRepository.save(postEntity);
     }
@@ -73,7 +73,7 @@ public class PostDao {
 
     public void deletePost(int id) {
         Optional<PostEntity> targetEntity = this.postRepository.findById((long) id);
-        if (targetEntity.isEmpty()) {
+        if (!targetEntity.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         this.postRepository.delete(targetEntity.get());
